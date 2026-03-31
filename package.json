@@ -1,6 +1,6 @@
 {
   "name": "fmtflow",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fluent, chainable number formatting powered by Intl.NumberFormat",
   "author": "iamjoytank",
   "license": "MIT",
