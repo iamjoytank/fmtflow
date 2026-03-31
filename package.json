@@ -23,7 +23,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/iamjoytank/fmtflow.git"
+    "url": "git+https://github.com/iamjoytank/fmtflow.git"
   },
   "homepage": "https://github.com/iamjoytank/fmtflow#readme",
   "bugs": {
