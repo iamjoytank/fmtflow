@@ -1,7 +1,9 @@
 {
   "name": "fmtflow",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Fluent, chainable number formatting powered by Intl.NumberFormat",
+  "author": "iamjoytank",
+  "license": "MIT",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.cjs",
@@ -14,7 +16,22 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iamjoytank/fmtflow.git"
+  },
+  "homepage": "https://github.com/iamjoytank/fmtflow#readme",
+  "bugs": {
+    "url": "https://github.com/iamjoytank/fmtflow/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "tsup",
     "test": "vitest run",
@@ -23,8 +40,17 @@
     "format": "biome format --write .",
     "prepublishOnly": "bun run build"
   },
-  "keywords": ["intl", "number", "format", "currency", "i18n"],
-  "license": "MIT",
+  "keywords": [
+    "intl",
+    "number",
+    "format",
+    "currency",
+    "i18n",
+    "formatter",
+    "locale",
+    "fluent",
+    "builder"
+  ],
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "tsup": "^8.3.5",

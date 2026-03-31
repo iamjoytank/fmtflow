@@ -1,0 +1,18 @@
+# Source & tests
+src/
+tests/
+
+# Config files
+tsconfig.json
+tsup.config.ts
+biome.json
+
+# Tooling
+node_modules/
+bun.lock
+*.tsbuildinfo
+
+# Misc
+.git/
+.gitignore
+.DS_Store
