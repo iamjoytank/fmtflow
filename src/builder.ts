@@ -3,8 +3,10 @@ import { getFormatter } from "./cache";
 interface FormatState {
   value?: number | null;
   locale: string;
-  style?: "currency" | "percent" | "decimal";
+  style?: "currency" | "percent" | "unit" | "decimal";
   currency?: string;
+  unit?: string;
+  unitDisplay?: "short" | "long" | "narrow";
   notation?: "compact";
   maximumFractionDigits?: number;
   minimumFractionDigits?: number;
@@ -15,6 +17,7 @@ export type FormatBuilder = {
   value(): string;
   currency(code: string): FormatBuilder;
   percent(): FormatBuilder;
+  unit(u: string, display?: "short" | "long" | "narrow"): FormatBuilder;
   compact(): FormatBuilder;
   round(digits: number): FormatBuilder;
   locale(loc: string): FormatBuilder;
@@ -24,6 +27,8 @@ function buildOptions(state: FormatState): Intl.NumberFormatOptions {
   const opts: Intl.NumberFormatOptions = {};
   if (state.style) opts.style = state.style;
   if (state.currency) opts.currency = state.currency;
+  if (state.unit) opts.unit = state.unit;
+  if (state.unitDisplay) opts.unitDisplay = state.unitDisplay;
   if (state.notation) opts.notation = state.notation;
   if (state.maximumFractionDigits !== undefined)
     opts.maximumFractionDigits = state.maximumFractionDigits;
@@ -49,6 +54,8 @@ export function createBuilder(state: FormatState): FormatBuilder {
       currency: (code: string) =>
         createBuilder({ ...state, style: "currency", currency: code }),
       percent: () => createBuilder({ ...state, style: "percent" }),
+      unit: (u: string, display: "short" | "long" | "narrow" = "short") =>
+        createBuilder({ ...state, style: "unit", unit: u, unitDisplay: display }),
       compact: () => createBuilder({ ...state, notation: "compact" }),
       round: (digits: number) =>
         createBuilder({

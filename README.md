@@ -50,10 +50,13 @@ bun add fmtflow
 ```ts
 import { format } from "fmtflow";
 
-format(1000000).currency("INR").compact().value(); // ₹10L
-format(0.25).percent().value();                    // 25%
-format(99.99).locale("en-US").currency("USD").value(); // $99.99
-format(1.23456).round(2).value();                  // 1.23
+format(1000000).currency("INR").compact().value();        // ₹10L
+format(0.25).percent().value();                           // 25%
+format(99.99).locale("en-US").currency("USD").value();    // $99.99
+format(1.23456).round(2).value();                         // 1.23
+format(10).locale("en-US").unit("kilometer").value();     // 10 km
+format(10).locale("en-US").unit("kilometer", "long").value();   // 10 kilometers
+format(5).locale("en-US").unit("kilometer", "narrow").value();  // 5km
 ```
 
 ### Reusable formatters
@@ -70,6 +73,20 @@ price(9.99);  // $9.99
 const compact = createFormatter().locale("en-IN").currency("INR").compact();
 compact(1000000); // ₹10L
 compact(2500000); // ₹25L
+```
+
+### Unit formatting
+
+Format physical measurements using any [ECMA-402 unit identifier](https://tc39.es/ecma402/#table-sanctioned-single-unit-identifiers):
+
+```ts
+import { format } from "fmtflow";
+
+format(10).locale("en-US").unit("kilometer").value();          // 10 km
+format(10).locale("en-US").unit("kilometer", "long").value();  // 10 kilometers
+format(5).locale("en-US").unit("kilometer", "narrow").value(); // 5km
+format(72).locale("en-US").unit("fahrenheit").value();         // 72°F
+format(1.8).locale("en-US").unit("meter-per-second").value();  // 1.8 m/s
 ```
 
 ### Indian number formatting
@@ -106,6 +123,7 @@ createFormatter(): FormatBuilder
 |--------|-------------|
 | `.currency(code)` | Format as currency (`"INR"`, `"USD"`, etc.) |
 | `.percent()` | Format as percentage — input is a decimal (`0.25` → `25%`) |
+| `.unit(u, display?)` | Format with a unit — `display` is `"short"` (default), `"long"`, or `"narrow"` |
 | `.compact()` | Use compact notation (`1000000` → `10L` / `1M`) |
 | `.round(digits)` | Fix fraction digits |
 | `.locale(loc)` | Override locale (default: `en-IN`) |

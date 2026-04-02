@@ -3,11 +3,7 @@ import { createFormatter, format } from "../src/index";
 
 describe("format()", () => {
   it("formats INR currency with compact notation", () => {
-    const result = format(1000000)
-      .locale("en-IN")
-      .currency("INR")
-      .compact()
-      .value();
+    const result = format(1000000).locale("en-IN").currency("INR").compact().value();
     expect(result).toBe("₹10L");
   });
 
@@ -39,6 +35,22 @@ describe("format()", () => {
   it("compact() shortens large numbers", () => {
     const result = format(2500000).locale("en-IN").compact().value();
     expect(result).toBe("25L");
+  });
+});
+
+describe("unit()", () => {
+  it("formats kilometer short", () => {
+    expect(format(10).locale("en-US").unit("kilometer").value()).toBe("10 km");
+  });
+
+  it("formats kilometer long", () => {
+    expect(format(10).locale("en-US").unit("kilometer", "long").value()).toBe(
+      "10 kilometers",
+    );
+  });
+
+  it("formats kilometer narrow", () => {
+    expect(format(5).locale("en-US").unit("kilometer", "narrow").value()).toBe("5km");
   });
 });
 
