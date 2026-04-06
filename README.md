@@ -89,6 +89,37 @@ format(72).locale("en-US").unit("fahrenheit").value();         // 72°F
 format(1.8).locale("en-US").unit("meter-per-second").value();  // 1.8 m/s
 ```
 
+### Sign display
+
+```ts
+format(100).locale("en-US").sign("always").value();      // +100
+format(-50).locale("en-US").sign("never").value();       // 50
+format(0).locale("en-US").sign("exceptZero").value();    // 0
+```
+
+### Notation
+
+```ts
+format(1000).locale("en-US").notation("scientific").value();    // 1E3
+format(1000).locale("en-US").notation("engineering").value();   // 1E3
+format(2500000).locale("en-IN").notation("compact").value();    // 25L
+```
+
+### Currency display
+
+```ts
+format(1000).locale("en-US").currency("USD").currencyDisplay("symbol").value(); // $1,000.00
+format(1000).locale("en-US").currency("USD").currencyDisplay("code").value();   // USD 1,000.00
+format(1000).locale("en-US").currency("USD").currencyDisplay("name").value();   // 1,000.00 US dollars
+```
+
+### Grouping
+
+```ts
+format(1000000).locale("en-US").group(false).value();  // 1000000
+format(1000000).locale("en-US").group(true).value();   // 1,000,000
+```
+
 ### Indian number formatting
 
 fmtflow defaults to `en-IN` locale, making it a natural fit for Indian apps:
@@ -127,6 +158,10 @@ createFormatter(): FormatBuilder
 | `.compact()` | Use compact notation (`1000000` → `10L` / `1M`) |
 | `.round(digits)` | Fix fraction digits |
 | `.locale(loc)` | Override locale (default: `en-IN`) |
+| `.sign(mode)` | Control sign display — `"auto"` (default), `"always"`, `"never"`, `"exceptZero"` |
+| `.notation(type)` | Number notation — `"standard"`, `"scientific"`, `"engineering"`, `"compact"` |
+| `.currencyDisplay(type)` | How currency is shown — `"symbol"` (default), `"code"`, `"name"` |
+| `.group(enabled)` | Toggle thousand separators (`true`/`false`) |
 | `.value()` | Get the formatted string (only on bound formatters) |
 
 ## Comparison
