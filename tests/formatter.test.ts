@@ -70,6 +70,46 @@ describe("createFormatter()", () => {
   });
 });
 
+describe("v1.2.0 additions", () => {
+  it("sign('always') shows + on positive", () => {
+    expect(format(100).locale("en-US").sign("always").value()).toBe("+100");
+  });
+
+  it("sign('never') hides sign on negative", () => {
+    expect(format(-50).locale("en-US").sign("never").value()).toBe("50");
+  });
+
+  it("notation('scientific') formats in scientific notation", () => {
+    expect(format(1000).locale("en-US").notation("scientific").value()).toBe("1E3");
+  });
+
+  it("notation('compact') is equivalent to compact()", () => {
+    const a = format(2500000).locale("en-IN").compact().value();
+    const b = format(2500000).locale("en-IN").notation("compact").value();
+    expect(a).toBe(b);
+  });
+
+  it("currencyDisplay('code') shows currency code", () => {
+    expect(
+      format(1000).locale("en-US").currency("USD").currencyDisplay("code").value(),
+    ).toBe("USD\u00a01,000.00");
+  });
+
+  it("currencyDisplay('name') shows currency name", () => {
+    expect(
+      format(1).locale("en-US").currency("USD").currencyDisplay("name").value(),
+    ).toBe("1.00 US dollars");
+  });
+
+  it("group(false) disables thousand separators", () => {
+    expect(format(1000000).locale("en-US").group(false).value()).toBe("1000000");
+  });
+
+  it("group(true) keeps thousand separators", () => {
+    expect(format(1000000).locale("en-US").group(true).value()).toBe("1,000,000");
+  });
+});
+
 describe("cache", () => {
   it("returns the same Intl.NumberFormat instance for identical options", async () => {
     const { getFormatter } = await import("../src/cache");
