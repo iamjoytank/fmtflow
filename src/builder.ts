@@ -7,7 +7,10 @@ interface FormatState {
   currency?: string;
   unit?: string;
   unitDisplay?: "short" | "long" | "narrow";
-  notation?: "compact";
+  notation?: "standard" | "scientific" | "engineering" | "compact";
+  signDisplay?: "auto" | "always" | "never" | "exceptZero";
+  currencyDisplay?: "symbol" | "code" | "name";
+  useGrouping?: boolean;
   maximumFractionDigits?: number;
   minimumFractionDigits?: number;
 }
@@ -21,6 +24,10 @@ export type FormatBuilder = {
   compact(): FormatBuilder;
   round(digits: number): FormatBuilder;
   locale(loc: string): FormatBuilder;
+  sign(mode: "auto" | "always" | "never" | "exceptZero"): FormatBuilder;
+  notation(type: "standard" | "scientific" | "engineering" | "compact"): FormatBuilder;
+  currencyDisplay(type: "symbol" | "code" | "name"): FormatBuilder;
+  group(enabled: boolean): FormatBuilder;
 };
 
 function buildOptions(state: FormatState): Intl.NumberFormatOptions {
@@ -30,6 +37,9 @@ function buildOptions(state: FormatState): Intl.NumberFormatOptions {
   if (state.unit) opts.unit = state.unit;
   if (state.unitDisplay) opts.unitDisplay = state.unitDisplay;
   if (state.notation) opts.notation = state.notation;
+  if (state.signDisplay) opts.signDisplay = state.signDisplay;
+  if (state.currencyDisplay) opts.currencyDisplay = state.currencyDisplay;
+  if (state.useGrouping !== undefined) opts.useGrouping = state.useGrouping;
   if (state.maximumFractionDigits !== undefined)
     opts.maximumFractionDigits = state.maximumFractionDigits;
   if (state.minimumFractionDigits !== undefined)
@@ -64,6 +74,13 @@ export function createBuilder(state: FormatState): FormatBuilder {
           minimumFractionDigits: digits,
         }),
       locale: (loc: string) => createBuilder({ ...state, locale: loc }),
+      sign: (mode: "auto" | "always" | "never" | "exceptZero") =>
+        createBuilder({ ...state, signDisplay: mode }),
+      notation: (type: "standard" | "scientific" | "engineering" | "compact") =>
+        createBuilder({ ...state, notation: type }),
+      currencyDisplay: (type: "symbol" | "code" | "name") =>
+        createBuilder({ ...state, currencyDisplay: type }),
+      group: (enabled: boolean) => createBuilder({ ...state, useGrouping: enabled }),
     },
   ) as FormatBuilder;
 }
