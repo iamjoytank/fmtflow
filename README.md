@@ -59,9 +59,34 @@ format(10).locale("en-US").unit("kilometer", "long").value();   // 10 kilometers
 format(5).locale("en-US").unit("kilometer", "narrow").value();  // 5km
 ```
 
-### Reusable formatters
+### Reusable presets
 
-Avoid repeating configuration across your app:
+Define a formatter once, call it anywhere:
+
+```ts
+import { preset } from "fmtflow";
+
+const INR = preset().locale("en-IN").currency("INR").compact();
+INR(1000000); // ₹10L
+INR(2500000); // ₹25L
+
+const usd = preset().locale("en-US").currency("USD");
+usd(100);   // $100.00
+usd(9.99);  // $9.99
+```
+
+Presets are immutable — derived chains don't affect the original:
+
+```ts
+const base = preset().locale("en-US");
+const withCurrency = base.currency("USD");
+const withPercent  = base.percent();
+
+withCurrency(50); // $50.00
+withPercent(0.5); // 50%
+```
+
+### Reusable formatters
 
 ```ts
 import { createFormatter } from "fmtflow";
@@ -69,10 +94,6 @@ import { createFormatter } from "fmtflow";
 const price = createFormatter().locale("en-US").currency("USD");
 price(100);   // $100.00
 price(9.99);  // $9.99
-
-const compact = createFormatter().locale("en-IN").currency("INR").compact();
-compact(1000000); // ₹10L
-compact(2500000); // ₹25L
 ```
 
 ### Unit formatting
@@ -140,9 +161,17 @@ Creates a bound formatter with a value. Call `.value()` at the end to get the st
 format(value: number | null | undefined): FormatBuilder
 ```
 
+### `preset()`
+
+Creates a reusable formatter template with no bound value. Call it as a function to format.
+
+```ts
+preset(): FormatBuilder
+```
+
 ### `createFormatter()`
 
-Creates a reusable formatter with no bound value. Call it as a function to format.
+Alias for `preset()` — same behaviour, kept for backward compatibility.
 
 ```ts
 createFormatter(): FormatBuilder
