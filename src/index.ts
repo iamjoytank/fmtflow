@@ -8,3 +8,7 @@ export function format(value: number | null | undefined) {
 export function createFormatter() {
   return createBuilder({ locale: DEFAULT_LOCALE });
 }
+
+export function preset() {
+  return createBuilder({ locale: DEFAULT_LOCALE });
+}

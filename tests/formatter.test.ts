@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { createFormatter, format } from "../src/index";
+import { createFormatter, format, preset } from "../src/index";
 
 describe("format()", () => {
   it("formats INR currency with compact notation", () => {
@@ -107,6 +107,38 @@ describe("v1.2.0 additions", () => {
 
   it("group(true) keeps thousand separators", () => {
     expect(format(1000000).locale("en-US").group(true).value()).toBe("1,000,000");
+  });
+});
+
+describe("preset()", () => {
+  it("is callable as a function", () => {
+    const INR = preset().locale("en-IN").currency("INR").compact();
+    expect(INR(1000000)).toBe("₹10L");
+  });
+
+  it("is reusable across multiple values", () => {
+    const usd = preset().locale("en-US").currency("USD");
+    expect(usd(100)).toBe("$100.00");
+    expect(usd(9.99)).toBe("$9.99");
+    expect(usd(0)).toBe("$0.00");
+  });
+
+  it("chains are immutable — preset unaffected by derived chains", () => {
+    const base = preset().locale("en-US");
+    const withCurrency = base.currency("USD");
+    const withPercent = base.percent();
+    expect(withCurrency(50)).toBe("$50.00");
+    expect(withPercent(0.5)).toBe("50%");
+  });
+
+  it("preset with round()", () => {
+    const rounded = preset().locale("en-US").round(2);
+    expect(rounded(1.23456)).toBe("1.23");
+  });
+
+  it("preset with group(false)", () => {
+    const noGroup = preset().locale("en-US").group(false);
+    expect(noGroup(1000000)).toBe("1000000");
   });
 });
 
