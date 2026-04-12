@@ -1,7 +1,7 @@
 {
   "name": "fmtflow",
-  "version": "1.3.1",
-  "description": "Fluent, chainable number formatting powered by Intl.NumberFormat",
+  "version": "1.3.2",
+  "description": "Fluent number, currency, percent and unit formatting library for JavaScript using Intl.NumberFormat",
   "author": "iamjoytank",
   "license": "MIT",
   "type": "module",
@@ -41,15 +41,22 @@
     "prepublishOnly": "bun run build"
   },
   "keywords": [
-    "intl",
-    "number",
     "format",
-    "currency",
-    "i18n",
     "formatter",
-    "locale",
-    "fluent",
-    "builder"
+    "number format",
+    "currency format",
+    "intl",
+    "intl numberformat",
+    "compact number",
+    "number formatting",
+    "javascript formatter",
+    "typescript formatter",
+    "currency formatter",
+    "percent formatter",
+    "unit formatter",
+    "format pipeline",
+    "fluent api",
+    "number utils"
   ],
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

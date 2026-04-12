@@ -1,6 +1,19 @@
-# fmtflow
+# fmtflow — JavaScript/Typescript Number & Formatter (Intl-based)
 
-Fluent formatting pipeline for JavaScript — powered by native `Intl.NumberFormat`.
+Fluent number, currency, percent, and unit formatting library for JavaScript and TypeScript - powered by native `Intl.NumberFormat`.
+
+## Looking for?
+
+- A currency formatter in JavaScript?
+- A number formatting library using Intl?
+- Compact number formatting (₹10L, 1M)?
+- A fluent API for formatting values?
+
+fmtflow provides all of these with a clean, chainable API.
+
+## Keywords
+
+number formatting, currency formatter, percent formatter, unit formatter, Intl.NumberFormat wrapper, JavaScript formatter, TypeScript formatter, compact number formatting
 
 ## Why fmtflow?
 
@@ -57,6 +70,7 @@ format(1.23456).round(2).value();                         // 1.23
 format(10).locale("en-US").unit("kilometer").value();     // 10 km
 format(10).locale("en-US").unit("kilometer", "long").value();   // 10 kilometers
 format(5).locale("en-US").unit("kilometer", "narrow").value();  // 5km
+format(1234.567).decimal().round(2).value();              // 1,234.57
 ```
 
 ### Reusable presets
